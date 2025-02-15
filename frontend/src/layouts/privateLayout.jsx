@@ -1,7 +1,11 @@
 import Navbar from "components/Navbar";
-import { Navigate, Outlet } from "react-router";
+import Sidebar from "components/Sidebar";
+
+import { Navigate, Outlet, useLocation } from "react-router";
 
 export default function PrivateLayout() {
+  const { pathname } = useLocation();
+
   if (!localStorage.getItem("isAuthenticated")) {
     return <Navigate to="auth/login" replace />;
   }
@@ -9,6 +13,7 @@ export default function PrivateLayout() {
   return (
     <section className="min-w-[320px]">
       <Navbar />
+      {pathname === "/notes" && <Sidebar />}
 
       <Outlet />
     </section>

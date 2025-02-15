@@ -1,4 +1,5 @@
 import { Suspense, lazy } from "react";
+import NotesPage from "pages/private/NotesPage";
 import PrivateLayout from "layouts/PrivateLayout";
 
 const ErrorPage = lazy(() => import("pages/ErrorPage"));
@@ -15,6 +16,14 @@ const privateRoutes = [
         element: (
           <Suspense>
             <HomePage />
+          </Suspense>
+        ),
+      },
+      {
+        path: "notes",
+        element: (
+          <Suspense>
+            <NotesPage />
           </Suspense>
         ),
       },

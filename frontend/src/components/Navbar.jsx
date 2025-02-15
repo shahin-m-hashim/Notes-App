@@ -1,10 +1,16 @@
 import { Link } from "react-router";
 import { logoutUser } from "api/authApi";
 import { useNavigate } from "react-router";
+import { useLocation } from "react-router";
 import { useMutation } from "@tanstack/react-query";
+
+import NoteColor from "components/notes/NoteColor";
+import SearchNotes from "components/notes/SearchNotes";
+import NotesCategory from "components/notes/NotesCategory";
 
 export default function Navbar() {
   const navigate = useNavigate();
+  const { pathname } = useLocation();
 
   const mutation = useMutation({
     mutationFn: logoutUser,
@@ -21,6 +27,8 @@ export default function Navbar() {
             <Link to="/" className="hidden md:inline text-xl font-semibold">
               NotesApp
             </Link>
+
+            {pathname === "/notes" && <SearchNotes />}
           </li>
 
           <li className="flex-shrink-0">
@@ -71,6 +79,11 @@ export default function Navbar() {
             </button>
           </li>
         </ul>
+      </div>
+
+      <div className="flex flex-col gap-4 px-4 xs:hidden">
+        <NotesCategory />
+        <NoteColor />
       </div>
     </nav>
   );

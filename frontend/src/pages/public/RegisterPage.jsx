@@ -3,12 +3,15 @@ import { useEffect } from "react";
 import useStore from "store/_store";
 import { Link } from "react-router";
 import { registerUser } from "api/authApi";
+import { useNavigate } from "react-router";
 import { useShallow } from "zustand/shallow";
 import { useMutation } from "@tanstack/react-query";
 import { RotatingLines } from "react-loader-spinner";
 
 export default function RegisterPage() {
   // console.log("Rendering Register Page");
+
+  const navigate = useNavigate();
 
   const [
     resetForm,
@@ -28,6 +31,10 @@ export default function RegisterPage() {
 
   const mutation = useMutation({
     mutationFn: registerUser,
+    onSuccess: () => {
+      resetForm("register");
+      navigate("/auth/login");
+    },
   });
 
   const handleSubmit = (e) => {
@@ -221,7 +228,7 @@ export default function RegisterPage() {
           disabled={isDisabled}
           className={cn(
             "bg-[#0b69ff] w-full p-2 text-white rounded-md flex justify-center",
-            isDisabled && "opacity-60 cursor-not-allowed"
+            isDisabled ? "opacity-60 cursor-not-allowed" : "cursor-pointer"
           )}
         >
           {mutation.isPending ? (
