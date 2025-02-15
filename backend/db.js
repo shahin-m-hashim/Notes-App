@@ -39,6 +39,7 @@ export const connectDB = async () => {
       title TEXT NOT NULL,
       content TEXT NOT NULL,
       category TEXT,
+      color TEXT NOT NULL,
       created_at DATETIME NOT NULL,
       updated_at DATETIME,
       pinned BOOLEAN DEFAULT 0,

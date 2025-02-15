@@ -32,12 +32,13 @@ export const createNote = async (noteData, userId) => {
   const db = await connectDB();
 
   await db.run(
-    `INSERT INTO notes (title, content, category, pinned, archived, created_at, user_id) 
-     VALUES (?, ?, ?, ?, ?, datetime('now'), ?)`,
+    `INSERT INTO notes (title, content, category, color, pinned, archived, created_at, user_id) 
+     VALUES (?, ?, ?, ?, ?, ?, datetime('now'), ?)`,
     [
       noteData.title,
       noteData.content,
       noteData.category,
+      noteData.color,
       noteData.pinned,
       noteData.archived,
       userId,
