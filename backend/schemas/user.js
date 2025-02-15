@@ -3,7 +3,6 @@ import { z } from "zod";
 const nameSchema = z
   .string()
   .trim()
-  .nonempty()
   .min(3)
   .max(30)
   .regex(/^(?!\d+$)[a-zA-Z0-9_]+$/);
@@ -11,7 +10,6 @@ const nameSchema = z
 const passwordSchema = z
   .string()
   .trim()
-  .nonempty()
   .min(6)
   .max(24)
   .regex(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/);

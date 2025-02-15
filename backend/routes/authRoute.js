@@ -8,12 +8,12 @@ import {
 
 import { sanitizeLogin, sanitizeRegister } from "../middlewares/sanitizer.js";
 
-const authRoute = Router();
+const authRouter = Router();
 
-authRoute.post("/register", sanitizeRegister, registerController);
+authRouter.post("/register", sanitizeRegister, registerController);
 
-authRoute.post("/login", sanitizeLogin, loginController);
+authRouter.post("/login", sanitizeLogin, loginController);
 
-authRoute.get("/logout", logoutController);
+authRouter.get("/logout", logoutController);
 
-export default authRoute;
+export default authRouter;
