@@ -1,21 +1,39 @@
 import { cn } from "utils/cn";
+import { useSearchParams } from "react-router";
 
-const activePage = 1;
+export default function Pagination({ total = 0 }) {
+  const [searchParams, setSearchParams] = useSearchParams();
 
-export default function Pagination() {
+  const activePage = Number(searchParams.get("page")) || 1;
+
+  if (total <= 10) return null;
+
+  const totalPages = Math.ceil(total / 10);
+
+  const changePage = (page) => {
+    searchParams.set("page", page);
+    setSearchParams(searchParams);
+  };
+
   return (
     <ul className="flex items-center justify-center gap-2">
-      {Array.from({ length: 5 }).map((_, i) => (
-        <li
-          key={i}
-          className={cn(
-            i + 1 === activePage ? "bg-green-500" : "bg-black text-white",
-            "flex items-center cursor-not-allowed font-semibold justify-center text-xs size-6 rounded-full"
-          )}
-        >
-          {i + 1}
-        </li>
-      ))}
+      {Array.from({ length: totalPages }).map((_, i) => {
+        const pageNum = i + 1;
+        return (
+          <li
+            key={pageNum}
+            className={cn(
+              pageNum === activePage
+                ? "bg-green-500"
+                : "bg-black text-white hover:bg-gray-800 cursor-pointer",
+              "flex items-center justify-center font-semibold text-xs size-6 rounded-full"
+            )}
+            onClick={() => changePage(pageNum)}
+          >
+            {pageNum}
+          </li>
+        );
+      })}
     </ul>
   );
 }

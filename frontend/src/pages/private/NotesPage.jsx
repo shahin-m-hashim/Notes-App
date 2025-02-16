@@ -6,22 +6,21 @@ import useStore from "store/_store";
 import { getNotes } from "api/notesApi";
 import EmptyNotes from "components/notes/EmptyNotes";
 import NotesError from "components/notes/NotesError";
+import NoteCard from "components/notes/NoteCard";
+import Pagination from "components/notes/Pagination";
 
 export default function NotesPage() {
   const [searchParams] = useSearchParams();
   const setNotes = useStore((state) => state.setNotes);
 
+  const page = searchParams.get("page") || 1;
   const search = searchParams.get("search") || "";
   const category = searchParams.get("category") || "ALL";
 
-  const {
-    isError,
-    isFetching,
-    data: notes,
-  } = useQuery({
+  const { isError, isFetching, data } = useQuery({
     queryFn: getNotes,
-    onSuccess: (data) => setNotes(data),
-    queryKey: ["notes", search, category],
+    queryKey: ["notes", search, category, page],
+    onSuccess: (data) => setNotes(data.notes, data.total),
   });
 
   if (isFetching)
@@ -42,12 +41,18 @@ export default function NotesPage() {
       </main>
     );
 
-  console.log("Rendering Notes Page");
-
   return (
     <main className="flex flex-col h-screen pt-[35vh] xs:pt-14 overflow-auto xs:pl-[140px]">
-      {notes.length > 0 ? (
-        <>TODO: Add Notes Card and pagination</>
+      {data.notes.length > 0 ? (
+        <div className="p-4 flex flex-col gap-4 justify-between flex-1">
+          <ul className="grid md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4">
+            {data.notes.map((note, id) => (
+              <NoteCard key={id} note={note} />
+            ))}
+          </ul>
+
+          <Pagination total={data.total} />
+        </div>
       ) : (
         <EmptyNotes />
       )}

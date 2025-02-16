@@ -4,11 +4,11 @@ const createNotesSlice = (set) => ({
     notes: null,
   },
 
-  setNotes: (notes) =>
+  setNotes: (notes, total) =>
     set(
       (state) => {
         state.notesSlice.notes = notes;
-        state.notesSlice.total = notes.length;
+        state.notesSlice.total = total;
       },
       undefined,
       "setNotes"

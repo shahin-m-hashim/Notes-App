@@ -1,7 +1,8 @@
+import { Navigate, Outlet, useLocation } from "react-router";
+
 import Navbar from "components/Navbar";
 import Sidebar from "components/Sidebar";
-
-import { Navigate, Outlet, useLocation } from "react-router";
+import CreateNewNoteModal from "components/modals/CreateNewNoteModal";
 
 export default function PrivateLayout() {
   const { pathname } = useLocation();
@@ -11,11 +12,14 @@ export default function PrivateLayout() {
   }
 
   return (
-    <section className="min-w-[320px]">
-      <Navbar />
-      {pathname === "/notes" && <Sidebar />}
+    <>
+      <section className="min-w-[320px]">
+        <Navbar />
+        {pathname === "/notes" && <Sidebar />}
+        <Outlet />
+      </section>
 
-      <Outlet />
-    </section>
+      <CreateNewNoteModal />
+    </>
   );
 }

@@ -13,17 +13,19 @@ export const getNotes = async (req, res) => {
   try {
     const { search, category, page, limit } = noteQuerySchema.parse(req.query);
 
-    const notes = await fetchNotes(search, category, page, limit);
+    const { notes, total } = await fetchNotes(search, category, page, limit);
 
     return res.status(200).json({
       data: {
         notes,
-        total: notes.length,
+        total,
       },
       error: null,
       success: true,
     });
   } catch (e) {
+    console.log(e.message);
+
     return res.status(500).json({
       data: null,
       success: false,

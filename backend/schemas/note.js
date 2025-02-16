@@ -17,9 +17,9 @@ export const noteSchema = z
 
 export const noteQuerySchema = z
   .object({
-    page: z.number().int().positive().default(1),
     category: z.enum(categoryOptions).optional(),
     search: z.string().trim().max(100).default(""),
     limit: z.number().int().positive().default(10),
+    page: z.coerce.number().int().positive().default(1),
   })
   .strict();
