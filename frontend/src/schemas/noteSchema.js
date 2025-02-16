@@ -1,4 +1,7 @@
-const { z } = require("zod");
+import { z } from "zod";
+
+export const CATEGORIES = ["OTHER", "WORK", "STUDY", "PERSONAL"];
+export const COLORS = ["#fec971", "#fe9b72", "#b693fd", "#e4ef90", "#00d4fe"];
 
 const noteSchema = z.object({
   title: z
@@ -13,8 +16,8 @@ const noteSchema = z.object({
     .nonempty("Required.")
     .min(3, "At least 3 characters")
     .max(1000, "At most 1000 characters"),
-  color: z.enum(noteColors).default("#e8e9eb"),
-  category: z.enum(categoryOptions).default("OTHER"),
+  color: z.enum(COLORS).default("#e8e9eb"),
+  category: z.enum(CATEGORIES).default("OTHER"),
 });
 
 export default noteSchema;

@@ -1,12 +1,13 @@
+import { useEffect } from "react";
 import { useSearchParams } from "react-router";
 import { useQuery } from "@tanstack/react-query";
 import { ThreeDots } from "react-loader-spinner";
 
 import useStore from "store/_store";
 import { getNotes } from "api/notesApi";
+import NoteCard from "components/notes/NoteCard";
 import EmptyNotes from "components/notes/EmptyNotes";
 import NotesError from "components/notes/NotesError";
-import NoteCard from "components/notes/NoteCard";
 import Pagination from "components/notes/Pagination";
 
 export default function NotesPage() {
@@ -17,11 +18,16 @@ export default function NotesPage() {
   const search = searchParams.get("search") || "";
   const category = searchParams.get("category") || "ALL";
 
-  const { isError, isFetching, data } = useQuery({
+  const { isError, isFetched, isFetching, data } = useQuery({
     queryFn: getNotes,
     queryKey: ["notes", search, category, page],
-    onSuccess: (data) => setNotes(data.notes, data.total),
   });
+
+  useEffect(() => {
+    if (isFetched) {
+      setNotes(data.notes, data.total);
+    }
+  }, [data]);
 
   if (isFetching)
     return (

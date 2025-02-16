@@ -2,6 +2,7 @@ import { Navigate, Outlet, useLocation } from "react-router";
 
 import Navbar from "components/Navbar";
 import Sidebar from "components/Sidebar";
+import EditNoteModal from "components/modals/EditNoteModal";
 import CreateNewNoteModal from "components/modals/CreateNewNoteModal";
 
 export default function PrivateLayout() {
@@ -19,6 +20,7 @@ export default function PrivateLayout() {
         <Outlet />
       </section>
 
+      <EditNoteModal />
       <CreateNewNoteModal />
     </>
   );

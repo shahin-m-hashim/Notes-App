@@ -60,9 +60,9 @@ export const updateNote = async (id, noteData) => {
   const db = await connectDB();
 
   await db.run(
-    `UPDATE notes SET title = ?, content = ?, category = ?, updated_at = datetime('now') 
+    `UPDATE notes SET title = ?, content = ?,color = ?, category = ?, updated_at = datetime('now') 
      WHERE id = ?`,
-    [noteData.title, noteData.content, noteData.category, id]
+    [noteData.title, noteData.content, noteData.color, noteData.category, id]
   );
 };
 

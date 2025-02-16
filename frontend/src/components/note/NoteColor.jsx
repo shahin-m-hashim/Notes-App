@@ -1,6 +1,5 @@
 import useStore from "store/_store";
-
-export const COLORS = ["#fec971", "#fe9b72", "#b693fd", "#e4ef90", "#00d4fe"];
+import { COLORS } from "schemas/noteSchema";
 
 export default function NoteColor() {
   const showCreateNewNoteModal = useStore(

@@ -12,3 +12,19 @@ export const createNewNote = async () => {
     throw new Error(e.response?.data?.error || "Unknown error occurred.");
   }
 };
+
+export const editNote = async () => {
+  try {
+    const editForm = useStore.getState().editNoteSlice.form;
+
+    await api.put(`/notes/${editForm.id}`, {
+      title: editForm.title,
+      color: editForm.color,
+      content: editForm.content,
+      category: editForm.category,
+    });
+  } catch (e) {
+    if (e.response?.status === 401) useStore.getState().logout();
+    throw new Error(e.response?.data?.error || "Unknown error occurred.");
+  }
+};

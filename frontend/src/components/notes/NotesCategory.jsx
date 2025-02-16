@@ -3,8 +3,7 @@ import { useSearchParams } from "react-router";
 
 import ClearFiltersBtn from "components/ClearFiltersBtn";
 import { getAllQueryParams, getQueryParam } from "utils/queryParams";
-
-export const CATEGORIES = ["OTHER", "WORK", "STUDY", "PERSONAL"];
+import { CATEGORIES } from "schemas/noteSchema";
 
 export default function NotesCategory() {
   const [, setSearchParams] = useSearchParams();

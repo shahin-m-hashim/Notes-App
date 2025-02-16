@@ -1,33 +1,33 @@
+import { cn } from "utils/cn";
 import { useShallow } from "zustand/shallow";
 import { useMutation } from "@tanstack/react-query";
 
-import { cn } from "utils/cn";
 import useStore from "store/_store";
-import { createNewNote } from "api/noteApi";
+import { editNote } from "api/noteApi";
 import queryClient from "config/queryClientConfig";
 import { RotatingLines } from "react-loader-spinner";
 
 import { CATEGORIES, COLORS } from "schemas/noteSchema";
 
-export default function CreateNewNoteModal() {
+export default function EditNoteModal() {
   const [
-    newNoteForm,
-    resetNewNoteSlice,
-    setNewNoteFormField,
-    showCreateNewNoteModal,
+    editNoteForm,
+    showEditNoteModal,
+    resetEditNoteSlice,
+    setEditNoteFormField,
   ] = useStore(
     useShallow((store) => [
-      store.newNoteSlice.form,
-      store.resetNewNoteSlice,
-      store.setNewNoteFormField,
-      store.newNoteSlice.showCreateNewNoteModal,
+      store.editNoteSlice.form,
+      store.editNoteSlice.showEditNoteModal,
+      store.resetEditNoteSlice,
+      store.setEditNoteFormField,
     ])
   );
 
   const mutation = useMutation({
-    mutationFn: createNewNote,
+    mutationFn: editNote,
     onSuccess: () => {
-      resetNewNoteSlice();
+      resetEditNoteSlice();
       queryClient.invalidateQueries(["notes"]);
     },
   });
@@ -37,19 +37,19 @@ export default function CreateNewNoteModal() {
     mutation.mutate();
   };
 
-  const isFormValid = newNoteForm.title && newNoteForm.content;
+  const isFormValid = editNoteForm.title && editNoteForm.content;
 
   return (
     <div
       style={{
-        display: showCreateNewNoteModal ? "block" : "none",
+        display: showEditNoteModal ? "block" : "none",
       }}
       className="hidden absolute backdrop-brightness-75 inset-0 z-[100]"
     >
       <div className="absolute -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
         <div className="relative min-w-[300px] px-6 py-4 bg-white rounded-md shadow-md">
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-            <h1 className="text-2xl font-bold md:text-3xl">Create New Note</h1>
+            <h1 className="text-2xl font-bold md:text-3xl">Edit Note</h1>
 
             <label className="text-xl font-medium" htmlFor="title">
               Title
@@ -59,10 +59,10 @@ export default function CreateNewNoteModal() {
               id="title"
               type="text"
               name="title"
-              value={newNoteForm.title}
+              value={editNoteForm.title}
               placeholder="Enter Note Title"
               className="p-2 border rounded-md"
-              onChange={(e) => setNewNoteFormField("title", e.target.value)}
+              onChange={(e) => setEditNoteFormField("title", e.target.value)}
             />
 
             <label className="text-xl font-medium" htmlFor="content">
@@ -73,10 +73,10 @@ export default function CreateNewNoteModal() {
               type="text"
               id="content"
               name="content"
-              value={newNoteForm.content}
+              value={editNoteForm.content}
               placeholder="Enter Note Content"
               className="p-2 border rounded-md resize-none"
-              onChange={(e) => setNewNoteFormField("content", e.target.value)}
+              onChange={(e) => setEditNoteFormField("content", e.target.value)}
             />
 
             <div className="flex flex-row md:flex-col gap-4">
@@ -97,9 +97,9 @@ export default function CreateNewNoteModal() {
                         name="category"
                         value={category}
                         className="cursor-pointer"
-                        checked={category === newNoteForm.category}
+                        checked={category === editNoteForm.category}
                         onChange={(e) =>
-                          setNewNoteFormField("category", e.target.value)
+                          setEditNoteFormField("category", e.target.value)
                         }
                       />
                       <label htmlFor={category}>{category}</label>
@@ -122,9 +122,9 @@ export default function CreateNewNoteModal() {
                         name="color"
                         value={color}
                         className="cursor-pointer"
-                        checked={color === newNoteForm.color}
+                        checked={color === editNoteForm.color}
                         onChange={(e) =>
-                          setNewNoteFormField("color", e.target.value)
+                          setEditNoteFormField("color", e.target.value)
                         }
                       />
                       <label
@@ -175,7 +175,7 @@ export default function CreateNewNoteModal() {
 
           <button
             type="button"
-            onClick={resetNewNoteSlice}
+            onClick={resetEditNoteSlice}
             disabled={mutation.isPending}
             className={cn(
               "absolute top-2 right-2",

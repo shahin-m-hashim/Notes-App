@@ -1,3 +1,5 @@
+import EditNoteBtn from "components/note/EditNoteBtn";
+
 export default function NoteCard({ note }) {
   return (
     <li
@@ -23,12 +25,7 @@ export default function NoteCard({ note }) {
       </div>
 
       <div className="absolute top-2 right-2">
-        <button
-          type="button"
-          className="bg-[#0a0806] size-8 rounded-full flex items-center justify-center"
-        >
-          <img alt="edit note" className="p-2.5" src="icons/pencil.svg" />
-        </button>
+        <EditNoteBtn id={note.id} />
       </div>
 
       <div className="absolute bottom-2 right-2">
