@@ -4,9 +4,10 @@ import { useNavigate } from "react-router";
 import { useLocation } from "react-router";
 import { useMutation } from "@tanstack/react-query";
 
-import NoteColor from "components/notes/NoteColor";
+import NoteColor from "components/note/NoteColor";
 import SearchNotes from "components/notes/SearchNotes";
 import NotesCategory from "components/notes/NotesCategory";
+import ClearFiltersBtn from "components/ClearFiltersBtn";
 
 export default function Navbar() {
   const navigate = useNavigate();

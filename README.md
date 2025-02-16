@@ -83,17 +83,18 @@ Build a simple and efficient Notes App with the following features:
 
 ### 2. Notes Table
 
-| Column       | Type     | Description                         |
-| ------------ | -------- | ----------------------------------- |
-| `id`         | INTEGER  | Primary Key, Unique Note ID         |
-| `title`      | TEXT     | Note Title                          |
-| `content`    | TEXT     | Note Content                        |
-| `category`   | TEXT     | Personal, Work, Study, Others       |
-| `created_at` | DATETIME | Date Created                        |
-| `updated_at` | DATETIME | Last Modified Date                  |
-| `pinned`     | BOOLEAN  | If the note is pinned               |
-| `archived`   | BOOLEAN  | If the note is archived             |
-| `user_id`    | INTEGER  | Foreign Key, References Users Table |
+| Column       | Type     | Description                                 |
+| ------------ | -------- | ------------------------------------------- |
+| `id`         | INTEGER  | Primary Key, Unique Note ID                 |
+| `title`      | TEXT     | Note Title                                  |
+| `content`    | TEXT     | Note Content                                |
+| `category`   | TEXT     | Personal, Work, Study, Others               |
+| `color`      | TEXT     | #fec971, #fe9b72, #b693fd, #e4ef90, #00d4fe |
+| `created_at` | DATETIME | Date Created                                |
+| `updated_at` | DATETIME | Last Modified Date                          |
+| `pinned`     | BOOLEAN  | If the note is pinned                       |
+| `archived`   | BOOLEAN  | If the note is archived                     |
+| `user_id`    | INTEGER  | Foreign Key, References Users Table         |
 
 ---
 

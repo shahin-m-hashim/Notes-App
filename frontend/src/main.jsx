@@ -14,7 +14,7 @@ createRoot(document.getElementById("root")).render(
   <ErrorBoundary fallback={<ErrorPage />}>
     <QueryClientProvider client={queryClient}>
       <App />
-      {/* <ReactQueryDevtools /> */}
+      <ReactQueryDevtools />
     </QueryClientProvider>
   </ErrorBoundary>
 );

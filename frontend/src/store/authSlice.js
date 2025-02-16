@@ -30,7 +30,7 @@ const initialRegisterForm = {
 };
 
 const createAuthSlice = (set) => ({
-  auth: {
+  authSlice: {
     login: initialLoginForm,
     register: initialRegisterForm,
   },
@@ -38,7 +38,7 @@ const createAuthSlice = (set) => ({
   setLoginFormField: (field, value) => {
     set(
       (state) => {
-        state.auth.login[field] = value;
+        state.authSlice.login[field] = value;
       },
       undefined,
       "setLoginFormField"
@@ -99,9 +99,9 @@ const createAuthSlice = (set) => ({
     set(
       (state) => {
         if (form === "register") {
-          state.auth.register.password.showValue = show;
+          state.authSlice.register.password.showValue = show;
         } else {
-          state.auth.login.showPassword = show;
+          state.authSlice.login.showPassword = show;
         }
       },
       undefined,
@@ -112,7 +112,7 @@ const createAuthSlice = (set) => ({
   setShowConfirmPasswordValue: (show) => {
     set(
       (state) => {
-        state.auth.register.confirmPassword.showValue = show;
+        state.authSlice.register.confirmPassword.showValue = show;
       },
       undefined,
       "setShowConfirmPasswordValue"
@@ -123,9 +123,9 @@ const createAuthSlice = (set) => ({
     set(
       (state) => {
         if (form === "login") {
-          state.auth.login = initialLoginForm;
+          state.authSlice.login = initialLoginForm;
         } else if (form === "register") {
-          state.auth.register = initialRegisterForm;
+          state.authSlice.register = initialRegisterForm;
         }
       },
       undefined,

@@ -1,21 +1,41 @@
-const CATEGORIES = ["STUDY", "WORK", "PERSONAL", "OTHER"];
+import { cn } from "utils/cn";
+import { useSearchParams } from "react-router";
 
-const activeCategory = "STUDY";
+import ClearFiltersBtn from "components/ClearFiltersBtn";
+import { getAllQueryParams, getQueryParam } from "utils/queryParams";
+
+const CATEGORIES = ["OTHER", "WORK", "STUDY", "PERSONAL"];
 
 export default function NotesCategory() {
+  const [, setSearchParams] = useSearchParams();
+  const activeCategory = getQueryParam("category");
+
+  const handleClick = (category) => {
+    const existingQueryParams = getAllQueryParams();
+    setSearchParams({ ...existingQueryParams, category });
+  };
   return (
     <div className="flex flex-col gap-4">
-      <h1 className="font-semibold">CATEGORY</h1>
+      <div className="flex justify-between items-center">
+        <h1 className="font-semibold">CATEGORY</h1>
+        <div className="xs:hidden">
+          <ClearFiltersBtn />
+        </div>
+      </div>
+
       <div className="flex xs:flex-col items-center text-xs gap-4 xs:text-base">
         {CATEGORIES.map((category) => (
-          <span
+          <button
+            type="button"
             key={category}
-            style={{
-              color: category === activeCategory ? "#000" : "",
-            }}
+            onClick={() => handleClick(category)}
+            className={cn(
+              "cursor-pointer",
+              category === activeCategory && "font-semibold text-blue-500"
+            )}
           >
             {category}
-          </span>
+          </button>
         ))}
       </div>
     </div>

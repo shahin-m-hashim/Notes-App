@@ -12,7 +12,7 @@ export default function ErrorPage() {
 
             <button
               type="button"
-              className="w-[160px] bg-blue-500 text-white px-4 py-2 rounded-md xs:w-full"
+              className="w-[160px] cursor-pointer bg-blue-500 text-white px-4 py-2 rounded-md xs:w-full"
               onClick={() => window.location.reload()}
             >
               Reload Page

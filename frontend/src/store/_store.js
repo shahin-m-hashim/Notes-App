@@ -1,7 +1,9 @@
 import { create } from "zustand";
-import createAuthSlice from "store/authSlice";
 import { devtools } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
+
+import createAuthSlice from "store/authSlice";
+import createNotesSlice from "store/notesSlice";
 
 const ENVIRONMENT = import.meta.env.VITE_ENVIRONMENT || "development";
 
@@ -9,6 +11,7 @@ const useStore = create(
   devtools(
     immer((set, get) => ({
       ...createAuthSlice(set, get),
+      ...createNotesSlice(set, get),
     })),
     {
       name: "store",

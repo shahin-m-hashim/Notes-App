@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import { useSearchParams } from "react-router";
+import { setQueryParam } from "utils/queryParams";
 
 export default function SearchNotes() {
   const [, setSearchParams] = useSearchParams();
@@ -7,20 +8,19 @@ export default function SearchNotes() {
   const searchNoteInputRef = useRef();
 
   const handleSearch = (searchQuery) => {
-    return;
-    // const updatedQueryParams = setQueryParam("search", searchQuery);
-    // setSearchParams(updatedQueryParams);
+    const updatedQueryParams = setQueryParam("search", searchQuery);
+    setSearchParams(updatedQueryParams);
+  };
+
+  const handleChange = () => {
+    const searchQuery = searchNoteInputRef.current.value;
+    if (!searchQuery) handleSearch("");
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const searchQuery = searchNoteInputRef.current.value;
     handleSearch(searchQuery);
-  };
-
-  const handleChange = () => {
-    const searchQuery = searchNoteInputRef.current.value;
-    if (!searchQuery) handleSearch("");
   };
 
   return (
@@ -30,18 +30,18 @@ export default function SearchNotes() {
     >
       <input
         type="search"
+        id="search-notes"
         autoComplete="off"
-        id="search-products"
-        name="search-products"
+        name="search-notes"
         onChange={handleChange}
         ref={searchNoteInputRef}
-        placeholder="Search Note"
+        placeholder="Search Notes"
         className="w-full p-2 outline-none"
       />
 
       <button
         type="submit"
-        className="flex items-center justify-center w-10 h-full p-2 bg-gray-400"
+        className="flex cursor-pointer items-center justify-center w-10 h-full p-2 bg-gray-400"
       >
         <img alt="search icon" className="size-full" src="icons/search.svg" />
       </button>
