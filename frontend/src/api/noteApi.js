@@ -1,5 +1,5 @@
-import api from "config/axiosConfig";
 import useStore from "store/_store";
+import api from "config/axiosConfig";
 
 export const createNewNote = async () => {
   try {
@@ -23,6 +23,15 @@ export const editNote = async () => {
       content: editForm.content,
       category: editForm.category,
     });
+  } catch (e) {
+    if (e.response?.status === 401) useStore.getState().logout();
+    throw new Error(e.response?.data?.error || "Unknown error occurred.");
+  }
+};
+
+export const pinNote = async (id) => {
+  try {
+    await api.patch(`/notes/${id}/pin`);
   } catch (e) {
     if (e.response?.status === 401) useStore.getState().logout();
     throw new Error(e.response?.data?.error || "Unknown error occurred.");

@@ -1,3 +1,4 @@
+import PinNoteBtn from "components/note/PinNoteBtn";
 import EditNoteBtn from "components/note/EditNoteBtn";
 
 export default function NoteCard({ note }) {
@@ -30,16 +31,7 @@ export default function NoteCard({ note }) {
 
       <div className="absolute bottom-2 right-2">
         <div className="flex items-center gap-2">
-          <button
-            type="button"
-            className="bg-[#0a0806] size-8 rounded-full flex items-center justify-center"
-          >
-            {note.pinned ? (
-              <img alt="archive" className="p-2.5" src="icons/unpin.svg" />
-            ) : (
-              <img alt="archive" className="p-2.5" src="icons/pin.svg" />
-            )}
-          </button>
+          <PinNoteBtn id={note.id} isPinned={note.pinned} />
 
           <button
             type="button"
