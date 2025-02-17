@@ -14,7 +14,11 @@ import authRouter from "./routes/authRoute.js";
 import notesRouter from "./routes/notesRoute.js";
 
 const server = express();
-const frontendOrigin = process.env.FRONTEND_ORIGIN;
+
+export const ENVIRONMENT = process.env.ENVIRONMENT || "development";
+
+const port = process.env.PORT || 8080;
+const frontendOrigin = process.env.FRONTEND_ORIGIN || "http://localhost:3000";
 
 const startServer = async () => {
   try {
@@ -62,8 +66,8 @@ const startServer = async () => {
         .send("Looks like, the page you are looking for doesn't exist");
     });
 
-    server.listen(process.env.PORT, () =>
-      console.log(`Server running on http://localhost:${process.env.PORT}`)
+    server.listen(port, () =>
+      console.log(`Server running on http://localhost:${port}`)
     );
   } catch (err) {
     console.log(`Server error: ${err.message}`);

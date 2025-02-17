@@ -9,8 +9,6 @@ import { useMutation } from "@tanstack/react-query";
 import { RotatingLines } from "react-loader-spinner";
 
 export default function RegisterPage() {
-  // console.log("Rendering Register Page");
-
   const navigate = useNavigate();
 
   const [
@@ -22,7 +20,7 @@ export default function RegisterPage() {
   ] = useStore(
     useShallow((state) => [
       state.resetForm,
-      state.auth.register,
+      state.authSlice.register,
       state.setRegisterFormField,
       state.setShowPasswordValue,
       state.setShowConfirmPasswordValue,

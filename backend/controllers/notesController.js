@@ -14,7 +14,13 @@ export const getNotes = async (req, res) => {
   try {
     const { search, category, page, limit } = noteQuerySchema.parse(req.query);
 
-    const { notes, total } = await fetchNotes(search, category, page, limit);
+    const { notes, total } = await fetchNotes(
+      req.user.id,
+      search,
+      category,
+      page,
+      limit
+    );
 
     return res.status(200).json({
       data: {
@@ -25,8 +31,6 @@ export const getNotes = async (req, res) => {
       success: true,
     });
   } catch (e) {
-    console.log(e.message);
-
     return res.status(500).json({
       data: null,
       success: false,
@@ -38,8 +42,7 @@ export const getNotes = async (req, res) => {
 export const getArchivedNotes = async (req, res) => {
   try {
     const { page, limit } = noteQuerySchema.parse(req.query);
-
-    const { notes, total } = await fetchArchivedNotes(page, limit);
+    const { notes, total } = await fetchArchivedNotes(req.user.id, page, limit);
 
     return res.status(200).json({
       data: {
@@ -50,8 +53,6 @@ export const getArchivedNotes = async (req, res) => {
       success: true,
     });
   } catch (e) {
-    console.log(e.message);
-
     return res.status(500).json({
       data: null,
       success: false,
@@ -64,7 +65,7 @@ export const postNote = async (req, res) => {
   try {
     const noteData = noteSchema.parse(req.body);
 
-    await createNote(noteData, req.user.id);
+    await createNote(req.user.id, noteData);
 
     return res.status(201).json({
       data: null,
@@ -72,8 +73,6 @@ export const postNote = async (req, res) => {
       success: true,
     });
   } catch (e) {
-    console.log(e.message);
-
     return res.status(500).json({
       data: null,
       success: false,
@@ -85,7 +84,7 @@ export const postNote = async (req, res) => {
 export const putNote = async (req, res) => {
   try {
     const noteData = noteSchema.parse(req.body);
-    await updateNote(req.params.id, noteData);
+    await updateNote(req.params.id, req.user.id, noteData);
 
     return res.status(200).json({
       data: null,
@@ -103,7 +102,7 @@ export const putNote = async (req, res) => {
 
 export const deleteNote = async (req, res) => {
   try {
-    await removeNote(req.params.id);
+    await removeNote(req.params.id, req.user.id);
     return res.status(200).json({
       data: null,
       error: null,
@@ -120,7 +119,7 @@ export const deleteNote = async (req, res) => {
 
 export const patchNotePin = async (req, res) => {
   try {
-    await pinNote(req.params.id);
+    await pinNote(req.params.id, req.user.id, req.body.isPinned);
 
     return res.status(200).json({
       data: null,
@@ -138,7 +137,7 @@ export const patchNotePin = async (req, res) => {
 
 export const patchNoteArchive = async (req, res) => {
   try {
-    await archiveNote(req.params.id);
+    await archiveNote(req.params.id, req.user.id, req.body.isArchived);
 
     return res.status(200).json({
       data: null,

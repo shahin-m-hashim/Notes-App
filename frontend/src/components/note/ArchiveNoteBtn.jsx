@@ -5,7 +5,7 @@ import queryClient from "config/queryClientConfig";
 
 export default function ArchiveNoteBtn({ id, isArchived }) {
   const mutation = useMutation({
-    mutationFn: () => archiveNote(id),
+    mutationFn: () => archiveNote(id, isArchived),
     onSuccess: () => {
       queryClient.refetchQueries(["notes"]);
       queryClient.refetchQueries(["archive"]);

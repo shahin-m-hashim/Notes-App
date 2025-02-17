@@ -29,18 +29,18 @@ export const editNote = async () => {
   }
 };
 
-export const pinNote = async (id) => {
+export const pinNote = async (id, isPinned) => {
   try {
-    await api.patch(`/notes/${id}/pin`);
+    await api.patch(`/notes/${id}/pin`, { isPinned });
   } catch (e) {
     if (e.response?.status === 401) useStore.getState().logout();
     throw new Error(e.response?.data?.error || "Unknown error occurred.");
   }
 };
 
-export const archiveNote = async (id) => {
+export const archiveNote = async (id, isArchived) => {
   try {
-    await api.patch(`/notes/${id}/archive`);
+    await api.patch(`/notes/${id}/archive`, { isArchived });
   } catch (e) {
     if (e.response?.status === 401) useStore.getState().logout();
     throw new Error(e.response?.data?.error || "Unknown error occurred.");

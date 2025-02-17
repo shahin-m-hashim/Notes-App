@@ -1,6 +1,7 @@
 import { connectDB } from "../db.js";
 
 export const fetchNotes = async (
+  userId = null,
   search = "",
   category,
   page = 1,
@@ -14,27 +15,35 @@ export const fetchNotes = async (
   const query = `
     SELECT id, title, content, category, color, created_at, pinned, archived 
     FROM notes 
-    WHERE title LIKE ?
+    WHERE user_id = ?
+    AND title LIKE ?
     AND archived = 0
     ${category ? "AND category = ?" : ""}
     ORDER BY pinned DESC, created_at DESC
     LIMIT ? OFFSET ?`;
 
   const countQuery = `
-    SELECT COUNT(*) as total
-    FROM notes
-    WHERE title LIKE ?
-    AND archived = 0
+    SELECT 
+      COUNT(*) as total
+    FROM 
+      notes
+    WHERE 
+      user_id = ?
+    AND 
+      title LIKE ?
+    AND 
+      archived = 0
     ${category ? "AND category = ?" : ""}`;
 
   const params = [
+    userId,
     `%${search}%`,
     ...(category ? [category] : []),
     limit,
     offset,
   ];
 
-  const countParams = [`%${search}%`, ...(category ? [category] : [])];
+  const countParams = [userId, `%${search}%`, ...(category ? [category] : [])];
 
   const notes = await db.all(query, params);
   const { total } = await db.get(countQuery, countParams);
@@ -42,7 +51,11 @@ export const fetchNotes = async (
   return { notes, total };
 };
 
-export const fetchArchivedNotes = async (page = 1, limit = 10) => {
+export const fetchArchivedNotes = async (
+  userId = null,
+  page = 1,
+  limit = 10
+) => {
   const db = await connectDB();
   const offset = (page - 1) * limit;
 
@@ -57,7 +70,9 @@ export const fetchArchivedNotes = async (page = 1, limit = 10) => {
       created_at 
     FROM 
       notes 
-    WHERE
+    WHERE 
+      user_id = ?
+    AND 
       archived = 1
     ORDER BY 
       pinned DESC, 
@@ -70,15 +85,17 @@ export const fetchArchivedNotes = async (page = 1, limit = 10) => {
     FROM 
       notes
     WHERE
+      user_id = ?
+    AND 
       archived = 1`;
 
-  const { total } = await db.get(countQuery);
-  const notes = await db.all(query, [limit, offset]);
+  const { total } = await db.get(countQuery, [userId]);
+  const notes = await db.all(query, [userId, limit, offset]);
 
   return { notes, total };
 };
 
-export const createNote = async (noteData, userId) => {
+export const createNote = async (userId, noteData) => {
   const db = await connectDB();
 
   await db.run(
@@ -96,43 +113,54 @@ export const createNote = async (noteData, userId) => {
   );
 };
 
-export const updateNote = async (id, noteData) => {
+export const updateNote = async (id, userId, noteData) => {
   const db = await connectDB();
 
   await db.run(
-    `UPDATE notes SET title = ?, content = ?,color = ?, category = ?, updated_at = datetime('now') 
-     WHERE id = ?`,
-    [noteData.title, noteData.content, noteData.color, noteData.category, id]
+    `UPDATE 
+      notes 
+    SET 
+      title = ?, 
+      content = ?,
+      color = ?, 
+      category = ?, 
+      updated_at = datetime('now') 
+    WHERE 
+      user_id = ? 
+    AND 
+      id = ?`,
+    [
+      noteData.title,
+      noteData.content,
+      noteData.color,
+      noteData.category,
+      userId,
+      id,
+    ]
   );
 };
 
-export const removeNote = async (id) => {
+export const removeNote = async (id, userId) => {
   const db = await connectDB();
-  await db.run(`DELETE FROM notes WHERE id = ?`, [id]);
+  await db.run(`DELETE FROM notes WHERE user_id = ? AND id = ?`, [userId, id]);
 };
 
-export const pinNote = async (id) => {
+export const pinNote = async (id, userId, isPinned) => {
   const db = await connectDB();
 
-  const note = await db.get(`SELECT pinned FROM notes WHERE id = ?`, [id]);
-  const newPinnedStatus = note.pinned ? 0 : 1;
-
-  await db.run(`UPDATE notes SET pinned = ? WHERE id = ?`, [
-    newPinnedStatus,
+  await db.run(`UPDATE notes SET pinned = ? WHERE user_id = ? AND id = ?`, [
+    isPinned ? 0 : 1,
+    userId,
     id,
   ]);
-
-  await db.get(`SELECT * FROM notes WHERE id = ?`, [id]);
 };
 
-export const archiveNote = async (id) => {
+export const archiveNote = async (id, userId, isArchived) => {
   const db = await connectDB();
 
-  const note = await db.get(`SELECT archived FROM notes WHERE id = ?`, [id]);
-  const newArchivedStatus = note.archived ? 0 : 1;
-
-  await db.run(`UPDATE notes SET archived = ? WHERE id = ?`, [
-    newArchivedStatus,
+  await db.run(`UPDATE notes SET archived = ? WHERE user_id = ? AND id = ?`, [
+    isArchived ? 0 : 1,
+    userId,
     id,
   ]);
 };

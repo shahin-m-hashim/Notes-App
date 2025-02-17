@@ -34,7 +34,9 @@ export default function NoteCard({ note }) {
         <div className="flex items-center gap-2">
           <PinNoteBtn id={note.id} isPinned={note.pinned} />
 
-          {!note.pinned && <ArchiveNoteBtn id={note.id} />}
+          {!note.pinned && (
+            <ArchiveNoteBtn id={note.id} isArchived={note.archived} />
+          )}
         </div>
       </div>
     </li>

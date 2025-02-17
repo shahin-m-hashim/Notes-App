@@ -1,23 +1,13 @@
 import { Link } from "react-router";
-import { logoutUser } from "api/authApi";
-import { useNavigate } from "react-router";
 import { useLocation } from "react-router";
-import { useMutation } from "@tanstack/react-query";
 
 import NoteColor from "components/note/NoteColor";
 import SearchNotes from "components/notes/SearchNotes";
 import NotesCategory from "components/notes/NotesCategory";
+import LogoutBtn from "components/LogoutBtn";
 
 export default function Navbar() {
-  const navigate = useNavigate();
   const { pathname } = useLocation();
-
-  const mutation = useMutation({
-    mutationFn: logoutUser,
-    onSuccess: () => navigate("/auth/login"),
-  });
-
-  // console.log("Rendering Navbar");
 
   return (
     <nav className="fixed z-50 w-full bg-[#FFFAF0] border-b-2 border-b-[#e2e8f0] h-[35vh] xs:h-14">
@@ -64,19 +54,8 @@ export default function Navbar() {
             </Link>
           </li>
 
-          <li className="flex-shrink-0 xs:bg-[#0967d2] xs:py-1 xs:px-3 rounded-md">
-            <button
-              type="button"
-              onClick={() => mutation.mutate()}
-              className="text-sm text-white cursor-pointer"
-            >
-              <img
-                alt="home"
-                className="pt-1.5 xs:hidden size-6"
-                src="https://assets.ccbp.in/frontend/react-js/nxt-trendz-log-out-img.png"
-              />
-              <span className="hidden xs:inline">Logout</span>
-            </button>
+          <li className="flex-shrink-0 xs:bg-[#0967d2] rounded-md">
+            <LogoutBtn />
           </li>
         </ul>
       </div>

@@ -4,8 +4,6 @@ import { Navigate } from "react-router";
 export default function PublicLayout() {
   if (localStorage.getItem("isAuthenticated")) return <Navigate to="/" />;
 
-  console.log("Rendering Public Layout");
-
   return (
     <section className="h-screen overflow-auto min-w-[320px] flex flex-col">
       <main className="flex flex-col items-center justify-center flex-1 w-full p-5 md:p-0 md:flex-row">

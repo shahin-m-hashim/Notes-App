@@ -4,7 +4,7 @@ import { useMutation } from "@tanstack/react-query";
 
 export default function PinNoteBtn({ id, isPinned }) {
   const mutation = useMutation({
-    mutationFn: () => pinNote(id),
+    mutationFn: () => pinNote(id, isPinned),
     onSuccess: () => {
       queryClient.invalidateQueries(["notes"]);
     },

@@ -1,4 +1,6 @@
 import { hash } from "bcrypt";
+
+import { ENVIRONMENT } from "../server.js";
 import { createAccessToken, createRefreshToken } from "../utils/token.js";
 import { loginService, registerService } from "../services/authService.js";
 
@@ -45,13 +47,13 @@ export const loginController = async (req, res) => {
     res.cookie("token", token, {
       httpOnly: true,
       maxAge: 1 * 24 * 60 * 60 * 1000,
-      secure: process.env.ENVIRONMENT === "production",
+      secure: ENVIRONMENT === "production",
     });
 
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
       maxAge: 7 * 24 * 60 * 60 * 1000,
-      secure: process.env.ENVIRONMENT === "production",
+      secure: ENVIRONMENT === "production",
     });
 
     res.status(200).json({

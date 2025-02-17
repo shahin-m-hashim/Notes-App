@@ -18,7 +18,7 @@ export default function ArchivedNotesPage() {
 
   const { isError, isFetched, isFetching, data } = useQuery({
     queryFn: () => getArchivedNotes(page),
-    queryKey: ["archive"],
+    queryKey: ["archive", page],
   });
 
   useEffect(() => {

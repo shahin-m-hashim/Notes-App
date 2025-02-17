@@ -48,7 +48,7 @@ const createAuthSlice = (set) => ({
   setRegisterFormField: (field, value) => {
     set(
       (state) => {
-        const { register } = state.auth;
+        const { register } = state.authSlice;
         register[field].value = value;
 
         const validators = {

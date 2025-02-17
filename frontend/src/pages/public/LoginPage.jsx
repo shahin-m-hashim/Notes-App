@@ -9,15 +9,13 @@ import { useMutation } from "@tanstack/react-query";
 import { RotatingLines } from "react-loader-spinner";
 
 export default function LoginPage() {
-  // console.log("Rendering Login Page");
-
   const navigate = useNavigate();
 
   const [resetForm, loginForm, setLoginFormField, setShowPasswordValue] =
     useStore(
       useShallow((state) => [
         state.resetForm,
-        state.auth.login,
+        state.authSlice.login,
         state.setLoginFormField,
         state.setShowPasswordValue,
       ])
