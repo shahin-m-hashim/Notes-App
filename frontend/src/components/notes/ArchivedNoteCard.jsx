@@ -24,14 +24,7 @@ export default function ArchivedNoteCard({ note }) {
         </p>
       </div>
 
-      <div className="absolute top-2 right-2">
-        <button
-          type="button"
-          className="bg-[#0a0806] cursor-pointer size-8 rounded-full flex items-center justify-center"
-        >
-          <img alt="delete note" className="p-2.5" src="icons/delete.svg" />
-        </button>
-      </div>
+      <div className="absolute top-2 right-2">TODO: Delete Note</div>
 
       <div className="absolute bottom-2 right-2">
         <ArchiveNoteBtn id={note.id} isArchived={note.archived} />

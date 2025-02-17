@@ -2,7 +2,8 @@ import { cn } from "utils/cn";
 import { useSearchParams } from "react-router";
 
 import ClearFiltersBtn from "components/ClearFiltersBtn";
-import { getAllQueryParams, getQueryParam } from "utils/queryParams";
+import { getQueryParam, removeQueryParam } from "utils/queryParams";
+
 import { CATEGORIES } from "schemas/noteSchema";
 
 export default function NotesCategory() {
@@ -10,9 +11,10 @@ export default function NotesCategory() {
   const activeCategory = getQueryParam("category");
 
   const handleClick = (category) => {
-    const existingQueryParams = getAllQueryParams();
+    const existingQueryParams = removeQueryParam("page");
     setSearchParams({ ...existingQueryParams, category });
   };
+
   return (
     <div className="flex flex-col gap-4">
       <div className="flex justify-between items-center">

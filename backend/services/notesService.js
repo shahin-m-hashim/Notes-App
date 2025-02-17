@@ -9,6 +9,8 @@ export const fetchNotes = async (
   const db = await connectDB();
   const offset = (page - 1) * limit;
 
+  if (category === "ALL") category = "";
+
   const query = `
     SELECT id, title, content, category, color, created_at, pinned, archived 
     FROM notes 

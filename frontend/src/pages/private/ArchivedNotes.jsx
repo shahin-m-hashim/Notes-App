@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import { useSearchParams } from "react-router";
 import { useQuery } from "@tanstack/react-query";
 import { ThreeDots } from "react-loader-spinner";
 
@@ -9,6 +8,7 @@ import EmptyNotes from "components/notes/EmptyNotes";
 import NotesError from "components/notes/NotesError";
 import Pagination from "components/notes/Pagination";
 import ArchivedNoteCard from "components/notes/ArchivedNoteCard";
+import { useSearchParams } from "react-router";
 
 export default function ArchivedNotesPage() {
   const [searchParams] = useSearchParams();
@@ -17,8 +17,8 @@ export default function ArchivedNotesPage() {
   const page = searchParams.get("page") || "1";
 
   const { isError, isFetched, isFetching, data } = useQuery({
-    queryFn: getArchivedNotes,
-    queryKey: ["archive", page],
+    queryFn: () => getArchivedNotes(page),
+    queryKey: ["archive"],
   });
 
   useEffect(() => {

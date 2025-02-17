@@ -46,3 +46,12 @@ export const archiveNote = async (id) => {
     throw new Error(e.response?.data?.error || "Unknown error occurred.");
   }
 };
+
+export const deleteNote = async (id) => {
+  try {
+    await api.delete(`/notes/${id}`);
+  } catch (e) {
+    if (e.response?.status === 401) useStore.getState().logout();
+    throw new Error(e.response?.data?.error || "Unknown error occurred.");
+  }
+};

@@ -19,7 +19,7 @@ export default function NotesPage() {
   const category = searchParams.get("category") || "ALL";
 
   const { isError, isFetched, isFetching, data } = useQuery({
-    queryFn: getNotes,
+    queryFn: () => getNotes(search, category, page),
     queryKey: ["notes", search, category, page],
   });
 

@@ -1,11 +1,11 @@
 import { useShallow } from "zustand/shallow";
+import queryClient from "config/queryClientConfig";
 import { useMutation } from "@tanstack/react-query";
+import { RotatingLines } from "react-loader-spinner";
 
 import { cn } from "utils/cn";
 import useStore from "store/_store";
 import { createNewNote } from "api/noteApi";
-import queryClient from "config/queryClientConfig";
-import { RotatingLines } from "react-loader-spinner";
 
 import { CATEGORIES, COLORS } from "schemas/noteSchema";
 
@@ -28,7 +28,7 @@ export default function CreateNewNoteModal() {
     mutationFn: createNewNote,
     onSuccess: () => {
       resetNewNoteSlice();
-      queryClient.invalidateQueries(["notes"]);
+      queryClient.refetchQueries(["notes"]);
     },
   });
 

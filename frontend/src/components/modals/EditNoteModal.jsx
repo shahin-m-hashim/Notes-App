@@ -161,7 +161,7 @@ export default function EditNoteModal() {
                   animationDuration="0.75"
                 />
               ) : (
-                "Create Note"
+                "Save Changes"
               )}
             </button>
 

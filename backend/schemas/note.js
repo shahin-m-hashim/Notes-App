@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-const categoryOptions = ["PERSONAL", "WORK", "STUDY", "OTHER"];
+const categoryOptions = ["ALL", "PERSONAL", "WORK", "STUDY", "OTHER"];
 
 const noteColors = ["#fec971", "#fe9b72", "#b693fd", "#e4ef90", "#00d4fe"];
 
@@ -17,9 +17,9 @@ export const noteSchema = z
 
 export const noteQuerySchema = z
   .object({
-    category: z.enum(categoryOptions).optional(),
     search: z.string().trim().max(100).default(""),
-    limit: z.number().int().positive().default(10),
+    category: z.enum(categoryOptions).default("ALL"),
     page: z.coerce.number().int().positive().default(1),
+    limit: z.coerce.number().int().positive().default(10),
   })
   .strict();
