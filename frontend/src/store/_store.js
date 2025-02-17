@@ -6,6 +6,7 @@ import createAuthSlice from "store/authSlice";
 import createNotesSlice from "store/notesSlice";
 import createNewNoteSlice from "store/newNoteSlice";
 import createEditNoteSlice from "store/editNoteSlice";
+import createArchivedNotesSlice from "store/archivedNotesSlice";
 
 const ENVIRONMENT = import.meta.env.VITE_ENVIRONMENT || "development";
 
@@ -16,6 +17,7 @@ const useStore = create(
       ...createNotesSlice(set, get),
       ...createNewNoteSlice(set, get),
       ...createEditNoteSlice(set, get),
+      ...createArchivedNotesSlice(set, get),
     })),
     {
       name: "store",

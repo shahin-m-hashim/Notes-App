@@ -1,9 +1,10 @@
 import { Suspense, lazy } from "react";
-import NotesPage from "pages/private/NotesPage";
 import PrivateLayout from "layouts/PrivateLayout";
 
 const ErrorPage = lazy(() => import("pages/ErrorPage"));
 const HomePage = lazy(() => import("pages/private/HomePage"));
+const NotesPage = lazy(() => import("pages/private/NotesPage"));
+const ArchivedNotesPage = lazy(() => import("pages/private/ArchivedNotes"));
 
 const privateRoutes = [
   {
@@ -24,6 +25,14 @@ const privateRoutes = [
         element: (
           <Suspense>
             <NotesPage />
+          </Suspense>
+        ),
+      },
+      {
+        path: "archive",
+        element: (
+          <Suspense>
+            <ArchivedNotesPage />
           </Suspense>
         ),
       },

@@ -4,34 +4,32 @@ import { useQuery } from "@tanstack/react-query";
 import { ThreeDots } from "react-loader-spinner";
 
 import useStore from "store/_store";
-import { getNotes } from "api/notesApi";
-import NoteCard from "components/notes/NoteCard";
+import { getArchivedNotes } from "api/notesApi";
 import EmptyNotes from "components/notes/EmptyNotes";
 import NotesError from "components/notes/NotesError";
 import Pagination from "components/notes/Pagination";
+import ArchivedNoteCard from "components/notes/ArchivedNoteCard";
 
-export default function NotesPage() {
+export default function ArchivedNotesPage() {
   const [searchParams] = useSearchParams();
-  const setNotes = useStore((state) => state.setNotes);
+  const setArchivedNotes = useStore((state) => state.setArchivedNotes);
 
   const page = searchParams.get("page") || "1";
-  const search = searchParams.get("search") || "";
-  const category = searchParams.get("category") || "ALL";
 
   const { isError, isFetched, isFetching, data } = useQuery({
-    queryFn: getNotes,
-    queryKey: ["notes", search, category, page],
+    queryFn: getArchivedNotes,
+    queryKey: ["archive", page],
   });
 
   useEffect(() => {
     if (isFetched) {
-      setNotes(data.notes, data.total);
+      setArchivedNotes(data.notes, data.total);
     }
   }, [data]);
 
   if (isFetching)
     return (
-      <main className="flex flex-col h-screen pt-[35vh] xs:pt-14 overflow-auto xs:pl-[140px]">
+      <main className="flex flex-col h-screen pt-14 overflow-auto">
         <ThreeDots
           color="#0967d2"
           ariaLabel="loading-products"
@@ -42,18 +40,18 @@ export default function NotesPage() {
 
   if (isError)
     return (
-      <main className="flex flex-col h-screen pt-[35vh] xs:pt-14 overflow-auto xs:pl-[140px]">
+      <main className="flex flex-col h-screen pt-14 overflow-auto">
         <NotesError />
       </main>
     );
 
   return (
-    <main className="flex flex-col h-screen pt-[35vh] xs:pt-14 overflow-auto xs:pl-[140px]">
+    <main className="flex flex-col h-screen pt-14 overflow-auto">
       {data.notes.length > 0 ? (
         <div className="p-4 flex flex-col gap-4 justify-between flex-1">
           <ul className="grid md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4">
             {data.notes.map((note, id) => (
-              <NoteCard key={id} note={note} />
+              <ArchivedNoteCard key={id} note={note} />
             ))}
           </ul>
 

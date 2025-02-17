@@ -5,6 +5,7 @@ import {
   updateNote,
   removeNote,
   archiveNote,
+  fetchArchivedNotes,
 } from "../services/notesService.js";
 
 import { noteSchema, noteQuerySchema } from "../schemas/note.js";
@@ -14,6 +15,31 @@ export const getNotes = async (req, res) => {
     const { search, category, page, limit } = noteQuerySchema.parse(req.query);
 
     const { notes, total } = await fetchNotes(search, category, page, limit);
+
+    return res.status(200).json({
+      data: {
+        notes,
+        total,
+      },
+      error: null,
+      success: true,
+    });
+  } catch (e) {
+    console.log(e.message);
+
+    return res.status(500).json({
+      data: null,
+      success: false,
+      error: "Something went wrong",
+    });
+  }
+};
+
+export const getArchivedNotes = async (req, res) => {
+  try {
+    const { page, limit } = noteQuerySchema.parse(req.query);
+
+    const { notes, total } = await fetchArchivedNotes(page, limit);
 
     return res.status(200).json({
       data: {

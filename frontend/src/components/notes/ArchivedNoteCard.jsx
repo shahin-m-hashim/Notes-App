@@ -1,8 +1,6 @@
-import PinNoteBtn from "components/note/PinNoteBtn";
-import EditNoteBtn from "components/note/EditNoteBtn";
 import ArchiveNoteBtn from "components/note/ArchiveNoteBtn";
 
-export default function NoteCard({ note }) {
+export default function ArchivedNoteCard({ note }) {
   return (
     <li
       style={{ backgroundColor: note.color }}
@@ -27,15 +25,16 @@ export default function NoteCard({ note }) {
       </div>
 
       <div className="absolute top-2 right-2">
-        <EditNoteBtn id={note.id} />
+        <button
+          type="button"
+          className="bg-[#0a0806] cursor-pointer size-8 rounded-full flex items-center justify-center"
+        >
+          <img alt="delete note" className="p-2.5" src="icons/delete.svg" />
+        </button>
       </div>
 
       <div className="absolute bottom-2 right-2">
-        <div className="flex items-center gap-2">
-          <PinNoteBtn id={note.id} isPinned={note.pinned} />
-
-          {!note.pinned && <ArchiveNoteBtn id={note.id} />}
-        </div>
+        <ArchiveNoteBtn id={note.id} isArchived={note.archived} />
       </div>
     </li>
   );

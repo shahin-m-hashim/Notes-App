@@ -37,3 +37,12 @@ export const pinNote = async (id) => {
     throw new Error(e.response?.data?.error || "Unknown error occurred.");
   }
 };
+
+export const archiveNote = async (id) => {
+  try {
+    await api.patch(`/notes/${id}/archive`);
+  } catch (e) {
+    if (e.response?.status === 401) useStore.getState().logout();
+    throw new Error(e.response?.data?.error || "Unknown error occurred.");
+  }
+};

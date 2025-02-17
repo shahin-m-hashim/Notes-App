@@ -13,14 +13,16 @@ export const fetchNotes = async (
     SELECT id, title, content, category, color, created_at, pinned, archived 
     FROM notes 
     WHERE title LIKE ?
+    AND archived = 0
     ${category ? "AND category = ?" : ""}
-    ORDER BY created_at DESC 
+    ORDER BY pinned DESC, created_at DESC
     LIMIT ? OFFSET ?`;
 
   const countQuery = `
     SELECT COUNT(*) as total
     FROM notes
     WHERE title LIKE ?
+    AND archived = 0
     ${category ? "AND category = ?" : ""}`;
 
   const params = [
@@ -34,6 +36,42 @@ export const fetchNotes = async (
 
   const notes = await db.all(query, params);
   const { total } = await db.get(countQuery, countParams);
+
+  return { notes, total };
+};
+
+export const fetchArchivedNotes = async (page = 1, limit = 10) => {
+  const db = await connectDB();
+  const offset = (page - 1) * limit;
+
+  const query = `
+    SELECT 
+      id, 
+      title, 
+      color, 
+      content, 
+      archived, 
+      category, 
+      created_at 
+    FROM 
+      notes 
+    WHERE
+      archived = 1
+    ORDER BY 
+      pinned DESC, 
+      created_at DESC
+    LIMIT ? OFFSET ?`;
+
+  const countQuery = `
+    SELECT 
+      COUNT(*) as total
+    FROM 
+      notes
+    WHERE
+      archived = 1`;
+
+  const { total } = await db.get(countQuery);
+  const notes = await db.all(query, [limit, offset]);
 
   return { notes, total };
 };

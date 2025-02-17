@@ -7,11 +7,14 @@ import {
   deleteNote,
   patchNotePin,
   patchNoteArchive,
+  getArchivedNotes,
 } from "../controllers/notesController.js";
 
 const notesRouter = Router();
 
 notesRouter.get("/", getNotes);
+
+notesRouter.get("/archive", getArchivedNotes);
 
 notesRouter.post("/", postNote);
 
