@@ -15,7 +15,7 @@ import notesRouter from "./routes/notesRoute.js";
 
 const server = express();
 
-export const ENVIRONMENT = process.env.ENVIRONMENT || "development";
+export const ENVIRONMENT = process.env.ENVIRONMENT || "production";
 
 const port = process.env.PORT || 8080;
 const frontendOrigin = process.env.FRONTEND_ORIGIN || "http://localhost:3000";

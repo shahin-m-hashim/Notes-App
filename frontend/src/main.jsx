@@ -9,7 +9,7 @@ import ErrorPage from "pages/ErrorPage";
 import queryClient from "config/queryClientConfig";
 import ErrorBoundary from "components/wrappers/ErrorBoundary";
 
-const ENVIRONMENT = import.meta.env.VITE_ENVIRONMENT || "development";
+const ENVIRONMENT = import.meta.env.VITE_ENVIRONMENT || "production";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>

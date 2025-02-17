@@ -8,7 +8,7 @@ import createNewNoteSlice from "store/newNoteSlice";
 import createEditNoteSlice from "store/editNoteSlice";
 import createArchivedNotesSlice from "store/archivedNotesSlice";
 
-const ENVIRONMENT = import.meta.env.VITE_ENVIRONMENT || "development";
+const ENVIRONMENT = import.meta.env.VITE_ENVIRONMENT || "production";
 
 const useStore = create(
   devtools(
