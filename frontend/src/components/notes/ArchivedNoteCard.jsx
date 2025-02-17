@@ -1,4 +1,5 @@
 import ArchiveNoteBtn from "components/note/ArchiveNoteBtn";
+import DeleteNoteBtn from "components/note/DeleteNoteBtn";
 
 export default function ArchivedNoteCard({ note }) {
   return (
@@ -24,7 +25,9 @@ export default function ArchivedNoteCard({ note }) {
         </p>
       </div>
 
-      <div className="absolute top-2 right-2">TODO: Delete Note</div>
+      <div className="absolute top-2 right-2">
+        <DeleteNoteBtn id={note.id} />
+      </div>
 
       <div className="absolute bottom-2 right-2">
         <ArchiveNoteBtn id={note.id} isArchived={note.archived} />
