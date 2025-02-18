@@ -59,7 +59,7 @@ export default function RegisterPage() {
     <>
       <form
         onSubmit={handleSubmit}
-        className="flex flex-col md:border-[rgb(218,218,218)] md:border items-center w-full gap-5 shadow-lg md:p-10 md:w-3/4 xl:w-1/2"
+        className="flex flex-col md:border-[rgb(218,218,218)] md:border items-center w-full gap-5 md:shadow-lg md:p-10 md:w-3/4 xl:w-1/2"
       >
         <img
           alt="website logo"

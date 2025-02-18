@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useSearchParams } from "react-router";
 import { useQuery } from "@tanstack/react-query";
 import { ThreeDots } from "react-loader-spinner";
 
@@ -8,7 +9,6 @@ import EmptyNotes from "components/notes/EmptyNotes";
 import NotesError from "components/notes/NotesError";
 import Pagination from "components/notes/Pagination";
 import ArchivedNoteCard from "components/notes/ArchivedNoteCard";
-import { useSearchParams } from "react-router";
 
 export default function ArchivedNotesPage() {
   const [searchParams] = useSearchParams();
@@ -29,7 +29,7 @@ export default function ArchivedNotesPage() {
 
   if (isFetching)
     return (
-      <main className="flex flex-col h-screen pt-14 overflow-auto">
+      <main className="flex flex-col h-scroll pt-14 overflow-auto">
         <ThreeDots
           color="#0967d2"
           ariaLabel="loading-products"
@@ -40,13 +40,13 @@ export default function ArchivedNotesPage() {
 
   if (isError)
     return (
-      <main className="flex flex-col h-screen pt-14 overflow-auto">
+      <main className="flex flex-col h-scroll pt-14 overflow-auto">
         <NotesError />
       </main>
     );
 
   return (
-    <main className="flex flex-col h-screen pt-14 overflow-auto">
+    <main className="flex flex-col h-scroll pt-14 overflow-auto">
       {data.notes.length > 0 ? (
         <div className="p-4 flex flex-col gap-4 justify-between flex-1">
           <ul className="grid md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4">

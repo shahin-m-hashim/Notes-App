@@ -5,7 +5,7 @@ export default function PublicLayout() {
   if (localStorage.getItem("isAuthenticated")) return <Navigate to="/" />;
 
   return (
-    <section className="h-screen overflow-auto min-w-[320px] flex flex-col">
+    <section className="h-scroll overflow-auto min-w-[320px] flex flex-col">
       <main className="flex flex-col items-center justify-center flex-1 w-full p-5 md:p-0 md:flex-row">
         <div className="flex flex-col items-center flex-1 gap-5 justify-evenly md:items-end">
           <img

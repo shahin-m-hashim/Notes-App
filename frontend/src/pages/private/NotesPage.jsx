@@ -31,7 +31,7 @@ export default function NotesPage() {
 
   if (isFetching)
     return (
-      <main className="flex flex-col h-screen pt-[35vh] xs:pt-14 overflow-auto xs:pl-[140px]">
+      <main className="flex flex-col h-scroll pt-[35vh] xs:pt-14 overflow-auto xs:pl-[140px]">
         <ThreeDots
           color="#0967d2"
           ariaLabel="loading-products"
@@ -42,15 +42,15 @@ export default function NotesPage() {
 
   if (isError)
     return (
-      <main className="flex flex-col h-screen pt-[35vh] xs:pt-14 overflow-auto xs:pl-[140px]">
+      <main className="flex flex-col h-scroll pt-[35vh] xs:pt-14 overflow-auto xs:pl-[140px]">
         <NotesError />
       </main>
     );
 
   return (
-    <main className="flex flex-col h-screen pt-[35vh] xs:pt-14 overflow-auto xs:pl-[140px]">
+    <main className="flex flex-col h-scroll pt-[35vh] xs:pt-14  xs:pl-[140px]">
       {data.notes.length > 0 ? (
-        <div className="p-4 flex flex-col gap-4 justify-between flex-1">
+        <div className="p-4 overflow-auto flex flex-col gap-4 justify-between flex-1">
           <ul className="grid md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4">
             {data.notes.map((note, id) => (
               <NoteCard key={id} note={note} />

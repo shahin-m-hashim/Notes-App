@@ -1,7 +1,7 @@
 export default function ErrorPage() {
   return (
     <section className="bg-primary text-primary">
-      <main className="min-w-[320px] h-screen overflow-auto">
+      <main className="min-w-[320px] h-scroll overflow-auto">
         <div className="flex items-center justify-center size-full">
           <div className="flex flex-col items-center gap-5 text-center">
             <h1 className="text-2xl text-bold">Something went wrong</h1>

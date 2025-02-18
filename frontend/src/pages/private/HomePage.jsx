@@ -9,7 +9,7 @@ export default function HomePage() {
   return (
     <main
       className={cn(
-        "flex flex-col h-screen overflow-auto pt-14 bg-gradient-to-b from-indigo-500 via-purple-500 to-pink-500 text-white",
+        "flex flex-col h-scroll overflow-auto pt-14 bg-gradient-to-b from-indigo-500 via-purple-500 to-pink-500 text-white",
         pathname === "/" ? "items-center" : "pl-[140px]"
       )}
     >
