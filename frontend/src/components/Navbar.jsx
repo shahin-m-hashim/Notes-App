@@ -1,20 +1,32 @@
 import { Link } from "react-router";
 import { useLocation } from "react-router";
 
+import { cn } from "utils/cn";
+import LogoutBtn from "components/LogoutBtn";
 import NoteColor from "components/note/NoteColor";
 import SearchNotes from "components/notes/SearchNotes";
 import NotesCategory from "components/notes/NotesCategory";
-import LogoutBtn from "components/LogoutBtn";
 
 export default function Navbar() {
   const { pathname } = useLocation();
 
   return (
-    <nav className="fixed z-50 w-full bg-[#FFFAF0] border-b-2 border-b-[#e2e8f0] h-[35vh] xs:h-14">
+    <nav
+      className={cn(
+        "fixed z-50 w-full bg-[#FFFAF0] border-b-2 border-b-[#e2e8f0] ",
+        pathname === "/notes" ? " h-[35vh] xs:h-14" : " h-14"
+      )}
+    >
       <div className="flex items-center justify-end py-4 xs:py-auto w-full">
         <ul className="flex px-4 items-center w-full gap-4 text-[#64748b]">
           <li className="mr-auto flex item-center gap-14">
-            <Link to="/" className="hidden md:inline text-xl font-semibold">
+            <Link
+              to="/"
+              className={cn(
+                "text-xl font-semibold",
+                pathname === "/notes" && "hidden md:inline"
+              )}
+            >
               NotesApp
             </Link>
 
@@ -60,10 +72,12 @@ export default function Navbar() {
         </ul>
       </div>
 
-      <div className="flex flex-col gap-4 px-4 xs:hidden">
-        <NotesCategory />
-        <NoteColor />
-      </div>
+      {pathname === "/notes" && (
+        <div className="flex flex-col gap-4 px-4 xs:hidden">
+          <NotesCategory />
+          <NoteColor />
+        </div>
+      )}
     </nav>
   );
 }
